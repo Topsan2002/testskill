@@ -10,8 +10,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testskill/api/api.dart';
 import 'package:http/http.dart' as http;
-import 'package:testskill/components/login/loginCom.dart';
-import 'package:testskill/components/master/alertDialog.dart';
+import 'package:testskill/components/login/login_com.dart';
+import 'package:testskill/components/master/alertdialog.dart';
+import 'package:testskill/components/master/dowload.dart';
 import 'package:testskill/screen/dashboard/dashboard.dart';
 
 class Login extends StatefulWidget {
@@ -39,10 +40,8 @@ class _LoginState extends State<Login> {
 
     var res = jsonDecode(response.body);
     if (res['status'] == true) {
-      var listuser = res['data'];
       SharedPreferences keep = await SharedPreferences.getInstance();
-      keep.setString('user_id', listuser['id']);
-      keep.setString('user_data', jsonEncode(listuser));
+      keep.setString('user_data', jsonEncode(res['data']));
 
       showDialog(
         context: context,
@@ -50,10 +49,12 @@ class _LoginState extends State<Login> {
           text: 'ลงชื่อเข้าใช้สำเร็จ',
         ),
       );
-      Timer(Duration(milliseconds: 1000), () {
+      Timer(const Duration(milliseconds: 1000), () {
         Navigator.pop(context);
-        Navigator.pushReplacement(context,
-            PageTransition(child: Dashboard(), type: PageTransitionType.fade));
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: const Dashboard(), type: PageTransitionType.fade));
       });
     } else {
       showDialog(
@@ -62,7 +63,7 @@ class _LoginState extends State<Login> {
           text: 'ลงชื่อเข้าใช้ไม่สำเร็จ',
         ),
       );
-      Timer(Duration(milliseconds: 1000), () {
+      Timer(const Duration(milliseconds: 1000), () {
         Navigator.pop(context);
       });
     }

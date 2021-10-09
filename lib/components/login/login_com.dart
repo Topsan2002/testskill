@@ -72,6 +72,7 @@ class loginButton extends StatelessWidget {
         color: Colors.green,
         borderRadius: BorderRadius.circular(10.r),
       ),
+      // ignore: deprecated_member_use
       child: FlatButton(
         onPressed: press,
         padding: const EdgeInsets.all(0),
